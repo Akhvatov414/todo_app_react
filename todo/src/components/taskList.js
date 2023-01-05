@@ -1,45 +1,31 @@
 import React from 'react';
 import Footer from './footer';
+import Task from './task';
 
 const TaskList = () => {
+    const tasks = [
+        {   
+            id: Math.round(Math.random() * 1000),
+            description: 'Completed task',
+            created: 'created 17 seconds ago',
+            stateTask: 'completed',
+        },
+        {
+            id: Math.round(Math.random() * 1000),
+            description: 'Editing task',
+            created: 'created 5 minutes ago',
+            stateTask: 'editing',
+        },
+        {
+            id: Math.round(Math.random() * 1000),
+            description: 'Active task',
+            created: 'created 5 minutes ago',
+        }
+    ]
+
     return (
         <section className="main">
-            <ul className="todo-list">
-            <li className="completed">
-                <div className="view">
-                <input className="toggle" type="checkbox"/>
-                <label>
-                    <span className="description">Completed task</span>
-                    <span className="created">created 17 seconds ago</span>
-                </label>
-                <button className="icon icon-edit"></button>
-                <button className="icon icon-destroy"></button>
-                </div>
-            </li>
-            <li className="editing">
-                <div className="view">
-                <input className="toggle" type="checkbox"/>
-                <label>
-                    <span className="description">Editing task</span>
-                    <span className="created">created 5 minutes ago</span>
-                </label>
-                <button className="icon icon-edit"></button>
-                <button className="icon icon-destroy"></button>
-                </div>
-                <input type="text" className="edit" value="Editing task"/>
-            </li>
-            <li>
-                <div className="view">
-                <input className="toggle" type="checkbox"/>
-                <label>
-                    <span className="description">Active task</span>
-                    <span className="created">created 5 minutes ago</span>
-                </label>
-                <button className="icon icon-edit"></button>
-                <button className="icon icon-destroy"></button>
-                </div>
-            </li>
-            </ul>
+            <Task todos = {tasks}/>
             <Footer/>
         </section>
     );
