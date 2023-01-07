@@ -25,28 +25,28 @@ export default class Task extends Component {
     
 
   render() {
-    const {id, description, created, onDeleted} = this.props;
-    const {completed, editing} = this.state;
+    const {id, done, edit, description, created, onDeleted, onToggleEdited, onToggleCompleted} = this.props;
+    // const {completed, editing} = this.state;
     let classNames = '';
 
-    if(completed){
+    if(done){
         classNames = 'completed';
     }
 
-    if(editing){
+    if(edit){
         classNames = 'editing';
     }
 
     return (
         <li className={classNames} key={id}>
             <div className="view">
-                <input className="toggle" type="checkbox" onClick={this.changeStatus}/>
+                <input className="toggle" type="checkbox" onClick={onToggleCompleted}/>
                 <label>
                     <span className="description">{description}</span>
                     <span className="created">{created}</span>
                 </label>
                 <button className="icon icon-edit" 
-                    onClick={this.editTask}></button>
+                    onClick={onToggleEdited}></button>
                 <button className="icon icon-destroy" 
                     onClick={onDeleted}></button>
             </div>            

@@ -7,27 +7,22 @@ import Footer from './footer';
 
 
 export default class App extends Component {
-
     state = {
         tasks: [
-            {   
-                id: Math.round(Math.random() * 1000),
-                description: 'Completed task',
-                created: 'created 17 seconds ago',
-                stateTask: 'completed',
-            },
-            {
-                id: Math.round(Math.random() * 1000),
-                description: 'Editing task',
-                created: 'created 5 minutes ago',
-                stateTask: 'editing',
-            },
-            {
-                id: Math.round(Math.random() * 1000),
-                description: 'Active task',
-                created: 'created 5 minutes ago',
-            }
+            this.createTask('Completed task'),
+            this.createTask('Editing task'),
+            this.createTask('Active task'),
         ]
+    }
+
+    createTask(description) {
+        return {
+            id: Math.round(Math.random() * 1000),
+            description,
+            created: 'created 17 seconds ago',
+            done: false,
+            edit: false,
+        }
     }
 
     deleteTask = (id) => {
@@ -41,11 +36,7 @@ export default class App extends Component {
     }
 
     addTask = (task) => {
-        const newTask = {
-            id: Math.round(Math.random() * 1000),
-            description: task,
-            created: 'created 0 minutes ago',
-        }
+        const newTask = this.createTask(task);
 
         this.setState(({tasks}) => {
             const newTasks = [...tasks, newTask];
@@ -56,7 +47,39 @@ export default class App extends Component {
         })
     }
 
+    taskLeft = () => {
+       console.log('123'); 
+    };
+
+    onToggleCompleted = (id) => {
+        this.setState(({tasks}) => {
+            let completeTask = tasks.map((task) => {
+                if(task.id === id) {
+                    task.done = !task.done
+                }
+                return task;
+            })
+            return completeTask;
+        })
+    }
+
+
+    onToggleEdited = (id) => {
+        this.setState(({tasks}) => {
+            let completeTask = tasks.map((task) => {
+                if(task.id === id) {
+                    task.edit = !task.done
+                }
+                return task;
+            })
+            return completeTask;
+        })
+    }
+
   render() {
+    const countDone = this.state.tasks.filter((el) => el.done).length;
+    const taskCount = this.state.tasks.length - countDone
+
     return (
         <div>
             <NewTaskForm 
@@ -64,8 +87,10 @@ export default class App extends Component {
             />
             <TaskList todos={this.state.tasks}
                     onDeleted={this.deleteTask}
+                    onToggleCompleted={this.onToggleCompleted}
+                    onToggleEdited={this.onToggleEdited}
             />
-            <Footer taskLeft={1}/>
+            <Footer taskLeft={taskCount}/>
         </div>
     );
   }
