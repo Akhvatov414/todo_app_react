@@ -1,12 +1,28 @@
-import React from 'react';
+import React, { Component } from 'react'
 
-const NewTaskForm = () => {
+export default class newTaskForm extends Component {
+  render() {
     return (
-        <header className="header">
+      <header className="header">
         <h1>todos</h1>
-        <input className="new-todo" placeholder="What needs to be done?" autoFocus/>
+        <input className="new-todo" placeholder="What needs to be done?" onClick={(e) => this.props.onAdd(e.target.value)} autoFocus/>
       </header>
-    );
-};
+    )
+  }
+}
 
-export default NewTaskForm;
+
+// import React from 'react';
+
+// const NewTaskForm = ({onAdd}) => {
+
+
+//     return (
+      //   <header className="header">
+      //   <h1>todos</h1>
+      //   <input className="new-todo" placeholder="What needs to be done?" onClick={onAdd} autoFocus/>
+      // </header>
+//     );
+// };
+
+// export default NewTaskForm;

@@ -4,43 +4,37 @@ export default class Task extends Component {
 
     state = {
         completed: false,
+        editing: false,
     }        
       
 
     changeStatus = () => {
+        this.setState((state) => {
+            return {
+                completed: !state.completed,
+            }
+        })
+    }
+
+    editTask = () => {
         this.setState({
-            completed: true,
+            editing: true,
         })
     }
 
     
 
   render() {
-    const {id, description, created, stateTask} = this.props;
-    const {completed} = this.state;
+    const {id, description, created, onDeleted} = this.props;
+    const {completed, editing} = this.state;
     let classNames = '';
 
     if(completed){
-        classNames = 'completed'
-
-        return (
-            <li className={classNames} key={id}>
-                <div className="view">
-                    <input className="toggle" type="checkbox" onClick={this.changeStatus}/>
-                    <label>
-                        <span className="description">{description}</span>
-                        <span className="created">{created}</span>
-                    </label>
-                    <button className="icon icon-edit"></button>
-                    <button className="icon icon-destroy"></button>
-                </div>
-                <input type="text" className="edit" defaultValue={description}/>
-            </li>
-        )
+        classNames = 'completed';
     }
 
-    if(!completed){
-        classNames = '';
+    if(editing){
+        classNames = 'editing';
     }
 
     return (
@@ -51,9 +45,12 @@ export default class Task extends Component {
                     <span className="description">{description}</span>
                     <span className="created">{created}</span>
                 </label>
-                <button className="icon icon-edit"></button>
-                <button className="icon icon-destroy"></button>
-            </div>
+                <button className="icon icon-edit" 
+                    onClick={this.editTask}></button>
+                <button className="icon icon-destroy" 
+                    onClick={onDeleted}></button>
+            </div>            
+            <input type="text" className="edit" defaultValue={description}/>
         </li>
     )
   }
