@@ -36,6 +36,10 @@ export default class App extends Component {
     }
 
     addTask = (task) => {
+        if(task === ' '){
+            return
+        }
+
         const newTask = this.createTask(task);
 
         this.setState(({tasks}) => {

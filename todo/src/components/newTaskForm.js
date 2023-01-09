@@ -1,11 +1,40 @@
 import React, { Component } from 'react'
 
 export default class newTaskForm extends Component {
+
+  state = {
+    description: ''
+  }
+
+  onChangeHandler = (e) => {
+    this.setState({
+      description: e.target.value
+    });
+  }
+
+  resetForm = () => {
+    this.setState({
+      description: ''
+    });
+  }
+
+  onSubmit = (e) => {
+    e.preventDefault();
+    this.props.onAdd(this.state.description);
+
+    this.resetForm()
+  }
+
   render() {
     return (
       <header className="header">
         <h1>todos</h1>
-        <input className="new-todo" placeholder="What needs to be done?" onClick={(e) => this.props.onAdd(e.target.value)} autoFocus/>
+        <form onSubmit={this.onSubmit}>
+          <input className="new-todo" placeholder="What needs to be done?"
+            onChange={this.onChangeHandler}
+            value={this.state.description}
+            autoFocus/>
+          </form>
       </header>
     )
   }
