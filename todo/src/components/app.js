@@ -35,11 +35,22 @@ export default class App extends Component {
         })
     }
 
-    addTask = (task) => {
-        if(task === ' '){
-            return
-        }
+    clearCompleted = () => {
+        // this.setState(({tasks}) => {
+        //     let activeTasks = tasks.filter((el) => !el.done);
+        //     console.log(activeTasks);
+        //     return activeTasks;
+        // }) 
+        this.setState(({tasks}) => {
+            const removeArr = [...tasks].filter((el) => !el.done)
 
+            return {
+                tasks: removeArr,
+            }
+        })
+    }
+
+    addTask = (task) => {
         const newTask = this.createTask(task);
 
         this.setState(({tasks}) => {
@@ -50,10 +61,6 @@ export default class App extends Component {
             }
         })
     }
-
-    taskLeft = () => {
-       console.log('123'); 
-    };
 
     onToggleCompleted = (id) => {
         this.setState(({tasks}) => {
@@ -94,7 +101,9 @@ export default class App extends Component {
                     onToggleCompleted={this.onToggleCompleted}
                     onToggleEdited={this.onToggleEdited}
             />
-            <Footer taskLeft={taskCount}/>
+            <Footer taskLeft={taskCount}
+                    clearCompleted={this.clearCompleted}
+            />
         </div>
     );
   }
