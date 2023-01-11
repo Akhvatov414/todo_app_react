@@ -37,11 +37,6 @@ export default class App extends Component {
     }
 
     clearCompleted = () => {
-        // this.setState(({tasks}) => {
-        //     let activeTasks = tasks.filter((el) => !el.done);
-        //     console.log(activeTasks);
-        //     return activeTasks;
-        // }) 
         this.setState(({tasks}) => {
             const removeArr = [...tasks].filter((el) => !el.done)
 
@@ -88,9 +83,8 @@ export default class App extends Component {
         })
     }
 
-    filterAll = (e) => {
-        
-        if(e.target.value === 'All'){
+    filterAll = (e) => {        
+        if(e.target.value === 'all'){
             this.setState(({filter}) => {
                 return {
                     filter: 'all'
@@ -98,7 +92,7 @@ export default class App extends Component {
             })
         }
         
-        if(e.target.value === 'Completed'){
+        if(e.target.value === 'completed'){
             this.setState(({filter}) => {
                 return {
                     filter: 'completed'
@@ -106,7 +100,7 @@ export default class App extends Component {
             })
         }
         
-        if(e.target.value === 'Active'){
+        if(e.target.value === 'active'){
             this.setState(({filter}) => {
                 return {
                     filter: 'active'
@@ -153,8 +147,7 @@ export default class App extends Component {
                     taskLeft={taskCount}
                     clearCompleted={this.clearCompleted}
                     filterAll={this.filterAll}
-                    filterActive={this.filterActive}
-                    filterCompleted={this.filterCompleted}
+                    filterStatus={this.state.filter}
             />
         </div>
     );

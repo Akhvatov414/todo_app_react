@@ -17,23 +17,12 @@ const TaskList = ({todos, filter, done, onDeleted, onToggleCompleted, onToggleEd
         )
     })
 
-    let filteredElements;
-    if(filter === 'completed'){
-       filteredElements = elements.filter((el) => el.props.done)
-    }
-
-    if(filter === 'active'){
-        filteredElements = elements.filter((el) => !el.props.done)
-     }
-
-     if(filter === 'all'){
-        filteredElements = elements
-     }
+    
 
     return (
         <section className="main">
             <ul className="todo-list">
-                {filteredElements}
+                {elements}
             </ul>
         </section>
     );
