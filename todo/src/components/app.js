@@ -89,35 +89,29 @@ export default class App extends Component {
     }
 
     filterAll = (e) => {
-        let arrAllTasks = [...this.state.tasks];
-        let arrActiveTasks = [...this.state.tasks].filter((el) => !el.done);
-        let arrCompletedTasks = [...this.state.tasks].filter((el) => el.done);
         
         if(e.target.value === 'All'){
-            this.setState(({tasks}) => {
+            this.setState(({filter}) => {
                 return {
-                    tasks: arrAllTasks
+                    filter: 'all'
                 }
             })
-            console.log('Изначальный массив', this.state.tasks);
         }
         
         if(e.target.value === 'Completed'){
-            this.setState(({tasks}) => {
+            this.setState(({filter}) => {
                 return {
-                    tasks: arrCompletedTasks
+                    filter: 'completed'
                 }
             })
-            console.log('Массив завершенных тасок', arrCompletedTasks);
         }
         
         if(e.target.value === 'Active'){
-            this.setState(({tasks}) => {
+            this.setState(({filter}) => {
                 return {
-                    tasks: arrActiveTasks
+                    filter: 'active'
                 }
             })
-            console.log('Массив активных тасок ', arrActiveTasks);
         }
     }
 
@@ -130,14 +124,26 @@ export default class App extends Component {
 
   render() {
     const countDone = this.state.tasks.filter((el) => el.done).length;
-    const taskCount = this.state.tasks.length - countDone
+    const taskCount = this.state.tasks.length - countDone;
+
+    let todosItems = [...this.state.tasks].map((item) =>  item);
+    let filteredItems;
+    switch(this.state.filter){
+        case 'completed': filteredItems = todosItems.filter((el) => el.done);
+        break;
+        case 'active' : filteredItems = todosItems.filter((el) => !el.done);
+        break;
+        default: filteredItems = todosItems;
+    }
+
+    
 
     return (
         <div>
             <NewTaskForm 
                 onAdd={this.addTask}
             />
-            <TaskList todos={this.state.tasks}
+            <TaskList todos={filteredItems}
                       filter={this.state.filter}
                       onDeleted={this.deleteTask}
                       onToggleCompleted={this.onToggleCompleted}

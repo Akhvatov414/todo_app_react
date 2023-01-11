@@ -16,7 +16,6 @@ export default class tasksFilter extends Component {
   render() {
     const {filter} = this.props
     let classNames = '';
-    //console.log(this.state);
     if(this.state.selected){
       classNames = 'selected';
     }
