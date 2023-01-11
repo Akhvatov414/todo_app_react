@@ -12,7 +12,8 @@ export default class App extends Component {
             this.createTask('Completed task'),
             this.createTask('Editing task'),
             this.createTask('Active task'),
-        ]
+        ],
+        filter: 'all'
     }
 
     createTask(description) {
@@ -87,6 +88,46 @@ export default class App extends Component {
         })
     }
 
+    filterAll = (e) => {
+        let arrAllTasks = [...this.state.tasks];
+        let arrActiveTasks = [...this.state.tasks].filter((el) => !el.done);
+        let arrCompletedTasks = [...this.state.tasks].filter((el) => el.done);
+        
+        if(e.target.value === 'All'){
+            this.setState(({tasks}) => {
+                return {
+                    tasks: arrAllTasks
+                }
+            })
+            console.log('Изначальный массив', this.state.tasks);
+        }
+        
+        if(e.target.value === 'Completed'){
+            this.setState(({tasks}) => {
+                return {
+                    tasks: arrCompletedTasks
+                }
+            })
+            console.log('Массив завершенных тасок', arrCompletedTasks);
+        }
+        
+        if(e.target.value === 'Active'){
+            this.setState(({tasks}) => {
+                return {
+                    tasks: arrActiveTasks
+                }
+            })
+            console.log('Массив активных тасок ', arrActiveTasks);
+        }
+    }
+
+    filterActive = (e) => {
+    }
+
+    filterCompleted = () => {
+        console.log('Completed');
+    }
+
   render() {
     const countDone = this.state.tasks.filter((el) => el.done).length;
     const taskCount = this.state.tasks.length - countDone
@@ -97,12 +138,17 @@ export default class App extends Component {
                 onAdd={this.addTask}
             />
             <TaskList todos={this.state.tasks}
-                    onDeleted={this.deleteTask}
-                    onToggleCompleted={this.onToggleCompleted}
-                    onToggleEdited={this.onToggleEdited}
+                      filter={this.state.filter}
+                      onDeleted={this.deleteTask}
+                      onToggleCompleted={this.onToggleCompleted}
+                      onToggleEdited={this.onToggleEdited}
             />
-            <Footer taskLeft={taskCount}
+            <Footer buttons={this.state.filterButtons}
+                    taskLeft={taskCount}
                     clearCompleted={this.clearCompleted}
+                    filterAll={this.filterAll}
+                    filterActive={this.filterActive}
+                    filterCompleted={this.filterCompleted}
             />
         </div>
     );

@@ -26,7 +26,6 @@ export default class Task extends Component {
 
   render() {
     const {id, done, edit, description, created, onDeleted, onToggleEdited, onToggleCompleted} = this.props;
-    // const {completed, editing} = this.state;
     let classNames = '';
 
     if(done){
