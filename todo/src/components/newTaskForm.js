@@ -1,9 +1,18 @@
-import React, { Component } from 'react'
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 
 export default class newTaskForm extends Component {
 
   state = {
     description: ''
+  }
+
+  static defaultProps = {
+    onAdd: () => {console.log('item added');}
+  }
+
+  static propTypes = {
+    onAdd: PropTypes.func,
   }
 
   onChangeHandler = (e) => {

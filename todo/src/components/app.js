@@ -5,7 +5,6 @@ import Footer from './footer';
 
 
 
-
 export default class App extends Component {
     state = {
         tasks: [
@@ -20,7 +19,7 @@ export default class App extends Component {
         return {
             id: Math.round(Math.random() * 1000),
             description,
-            created: 'created 17 seconds ago',
+            created: Date.now(),
             done: false,
             edit: false,
         }

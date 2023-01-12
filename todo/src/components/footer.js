@@ -1,7 +1,10 @@
 import React from 'react';
 import TasksFilter from './tasksFilter';
+import PropTypes from 'prop-types';
 
-const Footer = ({taskLeft, clearCompleted, filterAll, filterStatus}) => {
+const Footer = (props) => {
+    const {taskLeft, clearCompleted, filterAll, filterStatus} = props;
+
     return (
         <footer className="footer">
           <span className="todo-count">{taskLeft} items left</span>
@@ -11,5 +14,19 @@ const Footer = ({taskLeft, clearCompleted, filterAll, filterStatus}) => {
         </footer>
     );
 };
+
+Footer.defaultProps = {
+    taskLeft: 0,
+    clearCompleted: () => {console.log('All completed');},
+    filterAll: () => {console.log('Filter');},
+    filterStatus: 'all'
+}
+
+Footer.propTypes = {
+    taskLeft: PropTypes.number,
+    clearCompleted: PropTypes.func,
+    filterAll: PropTypes.func,
+    filterStatus: PropTypes.any
+}
 
 export default Footer;

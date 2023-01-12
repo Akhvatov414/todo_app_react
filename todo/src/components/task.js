@@ -1,11 +1,12 @@
-import React, { Component } from 'react'
+import React, { Component } from 'react';
+import formatDistanceToNow from 'date-fns/formatDistanceToNow';
 
 export default class Task extends Component {
 
     state = {
         completed: false,
         editing: false,
-    }        
+    }
       
 
     changeStatus = () => {
@@ -42,7 +43,7 @@ export default class Task extends Component {
                 <input className="toggle" type="checkbox" onClick={onToggleCompleted}/>
                 <label>
                     <span className="description">{description}</span>
-                    <span className="created">{created}</span>
+                    <span className="created">Created {formatDistanceToNow(created, { includeSeconds: true })}</span>
                 </label>
                 <button className="icon icon-edit" 
                     onClick={onToggleEdited}></button>
