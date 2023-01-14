@@ -2,64 +2,66 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
 export default class newTaskForm extends Component {
-
   state = {
-    description: ''
-  }
+    description: '',
+  };
 
   static defaultProps = {
-    onAdd: () => {console.log('item added');}
-  }
+    onAdd: () => {
+      console.log('item added');
+    },
+  };
 
   static propTypes = {
     onAdd: PropTypes.func,
-  }
+  };
 
   onChangeHandler = (e) => {
     this.setState({
-      description: e.target.value
+      description: e.target.value,
     });
-  }
+  };
 
   resetForm = () => {
     this.setState({
-      description: ''
+      description: '',
     });
-  }
+  };
 
   onSubmit = (e) => {
     e.preventDefault();
     this.props.onAdd(this.state.description);
 
-    this.resetForm()
-  }
+    this.resetForm();
+  };
 
   render() {
     return (
       <header className="header">
         <h1>todos</h1>
         <form onSubmit={this.onSubmit}>
-          <input className="new-todo" placeholder="What needs to be done?"
+          <input
+            className="new-todo"
+            placeholder="What needs to be done?"
             onChange={this.onChangeHandler}
             value={this.state.description}
-            autoFocus/>
-          </form>
+            autoFocus
+          />
+        </form>
       </header>
-    )
+    );
   }
 }
-
 
 // import React from 'react';
 
 // const NewTaskForm = ({onAdd}) => {
 
-
 //     return (
-      //   <header className="header">
-      //   <h1>todos</h1>
-      //   <input className="new-todo" placeholder="What needs to be done?" onClick={onAdd} autoFocus/>
-      // </header>
+//   <header className="header">
+//   <h1>todos</h1>
+//   <input className="new-todo" placeholder="What needs to be done?" onClick={onAdd} autoFocus/>
+// </header>
 //     );
 // };
 
