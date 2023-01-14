@@ -58,6 +58,9 @@ module.exports = {
         "extensions": [".js", ".jsx", ".ts", ".tsx"],
         "moduleDirectory": ["node_modules", "src/"]
       }
+    },
+    "react": {
+      "version": "detect"
     }
   }
 };
