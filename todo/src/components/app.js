@@ -40,8 +40,8 @@ export default class App extends Component {
   };
 
   addTask = (task) => {
+    if (task[0] === ' ' || task === '') return;
     const newTask = this.createTask(task);
-    this.spaceChecker;
 
     this.setState(({ tasks }) => {
       const newTasks = [...tasks, newTask];
