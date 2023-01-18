@@ -53,13 +53,15 @@ export default class App extends Component {
   };
 
   edTask = (id, newTask) => {
-    const editTask = [...this.state.tasks].map((task) => {
-      if (task.id === id) {
-        task.description = newTask;
-      }
-      return task.description;
+    this.setState(({ tasks }) => {
+      const editTask = tasks.map((task) => {
+        if (task.id === id) {
+          task.description = newTask;
+        }
+        return task;
+      });
+      return editTask;
     });
-    return editTask;
   };
 
   onToggleCompleted = (id) => {
@@ -71,21 +73,6 @@ export default class App extends Component {
         return task;
       });
       return completeTask;
-    });
-  };
-
-  onToggleEdited = (id) => {
-    this.setState(({ tasks }) => {
-      const editTask = tasks.map((task) => {
-        if (task.id === id) {
-          task.edit = !task.edit;
-          if (task.done) {
-            task.edit = !task.edit;
-          }
-        }
-        return task;
-      });
-      return editTask;
     });
   };
 
@@ -128,7 +115,6 @@ export default class App extends Component {
           filter={this.state.filter}
           onDeleted={this.deleteTask}
           onToggleCompleted={this.onToggleCompleted}
-          onToggleEdited={this.onToggleEdited}
           onEdit={this.edTask}
         />
         <Footer
