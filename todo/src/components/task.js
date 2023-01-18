@@ -58,7 +58,7 @@ export default class Task extends Component {
         <label>
           <span className="description">{description}</span>
           <span className="created">
-            Created
+            {`Created `}
             {formatDistanceToNow(created, { includeSeconds: true })}
           </span>
         </label>
