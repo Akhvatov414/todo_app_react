@@ -5,6 +5,12 @@ export default class Task extends Component {
   state = {
     label: this.props.description,
     idTask: this.props.id,
+    completed: false,
+    edited: false,
+  };
+
+  spaceChecker = (e) => {
+    if (e.target.value === null) console.log('Пустой');
   };
 
   changeStatus = () => {
@@ -18,16 +24,8 @@ export default class Task extends Component {
     this.setState({
       label: e.target.value,
     });
-    //this.props.onToggleEdited(this.state.idTask, e.target.value);
     this.props.onEdit(this.props.id, this.state.label);
     this.props.onToggleEdited(this.state.idTask);
-    //console.log(this.props);
-  };
-
-  editedTask = () => {
-    this.setState({
-      label: this.props.description,
-    });
   };
 
   onChangeHandler = (e) => {

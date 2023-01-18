@@ -16,7 +16,6 @@ export default class App extends Component {
       description,
       created: Date.now(),
       done: false,
-      edit: false,
     };
   }
 
@@ -42,6 +41,7 @@ export default class App extends Component {
 
   addTask = (task) => {
     const newTask = this.createTask(task);
+    this.spaceChecker;
 
     this.setState(({ tasks }) => {
       const newTasks = [...tasks, newTask];
@@ -53,7 +53,6 @@ export default class App extends Component {
   };
 
   edTask = (id, newTask) => {
-    console.log(id + ' ' + newTask);
     const editTask = [...this.state.tasks].map((task) => {
       if (task.id === id) {
         task.description = newTask;
@@ -80,10 +79,8 @@ export default class App extends Component {
       const editTask = tasks.map((task) => {
         if (task.id === id) {
           task.edit = !task.edit;
-          this.edTask;
           if (task.done) {
             task.edit = !task.edit;
-            this.edTask;
           }
         }
         return task;
@@ -92,28 +89,18 @@ export default class App extends Component {
     });
   };
 
-  filterAll = (e) => {
-    if (e.target.value === 'all') {
-      this.setState(() => ({
-        filter: 'all',
-      }));
-    }
-
-    if (e.target.value === 'completed') {
-      this.setState(() => ({
-        filter: 'completed',
-      }));
-    }
-
-    if (e.target.value === 'active') {
-      this.setState(() => ({
-        filter: 'active',
-      }));
-    }
+  setFilter = (value) => {
+    this.setState(() => ({
+      filter: value,
+    }));
   };
 
-  filterCompleted = () => {
-    console.log('Completed');
+  filterAll = (e) => {
+    if (e.target.value === 'all') this.setFilter('all');
+
+    if (e.target.value === 'completed') this.setFilter('completed');
+
+    if (e.target.value === 'active') this.setFilter('active');
   };
 
   render() {
