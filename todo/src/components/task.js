@@ -5,7 +5,7 @@ export default class Task extends Component {
   state = {
     label: this.props.description,
     idTask: this.props.id,
-    completed: false,
+    completed: this.props.done,
     edited: false,
   };
 
@@ -58,8 +58,8 @@ export default class Task extends Component {
         <label>
           <span className="description">{description}</span>
           <span className="created">
-            {`Created `}
-            {formatDistanceToNow(created, { includeSeconds: true })}
+            {'Created '}
+            {formatDistanceToNow(created, { includeSeconds: true, addSuffix: true })}
           </span>
         </label>
         <button className="icon icon-edit" onClick={this.onToggleEdited} />

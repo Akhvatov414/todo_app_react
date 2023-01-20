@@ -2,9 +2,9 @@ import React, { Component } from 'react';
 
 export default class TasksFilter extends Component {
   btns = [
-    { name: 'all', value: 'all', id: Math.round(Math.random() * 1000) },
-    { name: 'active', value: 'active', id: Math.round(Math.random() * 1000) },
-    { name: 'completed', value: 'completed', id: Math.round(Math.random() * 1000) },
+    { name: 'all', value: 'all' },
+    { name: 'active', value: 'active' },
+    { name: 'completed', value: 'completed' },
   ];
 
   render() {

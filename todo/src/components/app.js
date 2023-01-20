@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { v4 as uuidv4 } from 'uuid';
 
 import NewTaskForm from './newTaskForm';
 import TaskList from './taskList';
@@ -12,7 +13,7 @@ export default class App extends Component {
 
   createTask(description) {
     return {
-      id: Math.round(Math.random() * 1000),
+      id: uuidv4(),
       description,
       created: Date.now(),
       done: false,
@@ -21,7 +22,7 @@ export default class App extends Component {
 
   deleteTask = (id) => {
     this.setState(({ tasks }) => {
-      const removeArr = [...tasks].filter((el) => el.id !== id);
+      const removeArr = tasks.filter((el) => el.id !== id);
 
       return {
         tasks: removeArr,
@@ -31,7 +32,7 @@ export default class App extends Component {
 
   clearCompleted = () => {
     this.setState(({ tasks }) => {
-      const removeArr = [...tasks].filter((el) => !el.done);
+      const removeArr = tasks.filter((el) => !el.done);
 
       return {
         tasks: removeArr,
@@ -39,8 +40,13 @@ export default class App extends Component {
     });
   };
 
+  isEmpty(str) {
+    if (str.trim() == '') return true;
+    return false;
+  }
+
   addTask = (task) => {
-    if (task[0] === ' ' || task === '') return;
+    if (this.isEmpty(task)) return;
     const newTask = this.createTask(task);
 
     this.setState(({ tasks }) => {
@@ -94,7 +100,7 @@ export default class App extends Component {
     const countDone = this.state.tasks.filter((el) => el.done).length;
     const taskCount = this.state.tasks.length - countDone;
 
-    const todosItems = [...this.state.tasks].map((item) => item);
+    const todosItems = this.state.tasks.map((item) => item);
     let filteredItems;
     switch (this.state.filter) {
       case 'completed':

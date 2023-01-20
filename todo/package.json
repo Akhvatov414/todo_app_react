@@ -11,6 +11,7 @@
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-scripts": "5.0.1",
+    "uuid": "^9.0.0",
     "web-vitals": "^2.1.4"
   },
   "scripts": {
@@ -28,13 +29,13 @@
       "react-app/jest"
     ]
   },
-   "husky": {
-      "hooks": "lint-staged"
-   },
-   "lint-staged":{
-      "*.js": "eslint --cache --debug ./src --fix",
-      "*.{js,css,md,html,json}": "prettier --write"
-   },
+  "husky": {
+    "hooks": "lint-staged"
+  },
+  "lint-staged": {
+    "*.js": "eslint --cache --debug ./src --fix",
+    "*.{js,css,md,html,json}": "prettier --write"
+  },
   "browserslist": {
     "production": [
       ">0.2%",
