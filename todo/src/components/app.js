@@ -7,16 +7,21 @@ import Footer from './footer';
 
 export default class App extends Component {
   state = {
-    tasks: [this.createTask('Completed task'), this.createTask('Editing task'), this.createTask('Active task')],
+    tasks: [
+      this.createTask('Completed task', 59),
+      this.createTask('Editing task', 60),
+      this.createTask('Active task', 61),
+    ],
     filter: 'all',
   };
 
-  createTask(description) {
+  createTask(description, time) {
     return {
       id: uuidv4(),
       description,
       created: Date.now(),
       done: false,
+      time: time,
     };
   }
 
@@ -45,9 +50,10 @@ export default class App extends Component {
     return false;
   }
 
-  addTask = (task) => {
+  addTask = (task, minutes, seconds) => {
     if (this.isEmpty(task)) return;
-    const newTask = this.createTask(task);
+    const timeInSeconds = Number(minutes) * 60 + Number(seconds);
+    const newTask = this.createTask(task, timeInSeconds);
 
     this.setState(({ tasks }) => {
       const newTasks = [...tasks, newTask];
@@ -114,7 +120,7 @@ export default class App extends Component {
     }
 
     return (
-      <div>
+      <section className="todoapp">
         <NewTaskForm onAdd={this.addTask} />
         <TaskList
           todos={filteredItems}
@@ -130,7 +136,7 @@ export default class App extends Component {
           filterAll={this.filterAll}
           filterStatus={this.state.filter}
         />
-      </div>
+      </section>
     );
   }
 }

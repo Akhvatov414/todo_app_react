@@ -4,6 +4,8 @@ import PropTypes from 'prop-types';
 export default class newTaskForm extends Component {
   state = {
     description: '',
+    minValue: '',
+    secValue: '',
   };
 
   static defaultProps = {
@@ -16,22 +18,25 @@ export default class newTaskForm extends Component {
     onAdd: PropTypes.func,
   };
 
-  onChangeHandler = (e) => {
+  onChangeHandler = (property, e) => {
     this.setState({
-      description: e.target.value,
+      [property]: e.target.value,
     });
   };
 
   resetForm = () => {
     this.setState({
       description: '',
+      minValue: '',
+      secValue: '',
     });
   };
 
   onSubmit = (e) => {
+    const { description, minValue, secValue } = this.state;
     e.preventDefault();
     if (this.state.description === '') console.log('Пустой элемент');
-    this.props.onAdd(this.state.description);
+    this.props.onAdd(description, minValue, secValue);
 
     this.resetForm();
   };
@@ -40,14 +45,45 @@ export default class newTaskForm extends Component {
     return (
       <header className="header">
         <h1>todos</h1>
-        <form onSubmit={this.onSubmit}>
+        <form onSubmit={this.onSubmit} className="new-todo-form">
           <input
             className="new-todo"
-            placeholder="What needs to be done?"
-            onChange={this.onChangeHandler}
+            placeholder="Task"
+            onChange={(e) => {
+              this.onChangeHandler('description', e);
+            }}
             value={this.state.description}
             autoFocus
           />
+          <input
+            className="new-todo-form__timer"
+            placeholder="Min"
+            required
+            type="number"
+            min={0}
+            max={1000}
+            step={1}
+            onChange={(e) => {
+              this.onChangeHandler('minValue', e);
+            }}
+            value={this.state.minValue}
+          />
+          <input
+            className="new-todo-form__timer"
+            placeholder="Sec"
+            required
+            type="number"
+            min={0}
+            max={59}
+            step={1}
+            onChange={(e) => {
+              this.onChangeHandler('secValue', e);
+            }}
+            value={this.state.secValue}
+          />
+          <button type="submit" style={{ display: 'none' }}>
+            Send
+          </button>
         </form>
       </header>
     );

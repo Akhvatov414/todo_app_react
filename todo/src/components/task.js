@@ -7,6 +7,7 @@ export default class Task extends Component {
     idTask: this.props.id,
     completed: this.props.done,
     edited: false,
+    timeInSeconds: this.props.time,
   };
 
   spaceChecker = (e) => {
@@ -43,6 +44,27 @@ export default class Task extends Component {
     });
   };
 
+  getMinutes = (time) => {
+    if (Math.floor(time / 60) < 10) return `0${Math.floor(time / 60)}`;
+    return Math.floor(time / 60);
+  };
+
+  getSeconds = (time) => {
+    if (Math.floor(time % 60) < 10) return `0${Math.floor(time / 60)}`;
+    return Math.floor(time % 60);
+  };
+
+  startTimer = () => {
+    let countdown;
+    if (this.state.timeInSeconds > 1) {
+      countdown = setInterval(() => {
+        this.setState((state) => ({
+          timeInSeconds: state.timeInSeconds - 1,
+        }));
+      }, 1000);
+    }
+  };
+
   renderEdit = () => {
     return (
       <form onSubmit={this.editTask}>
@@ -52,12 +74,18 @@ export default class Task extends Component {
   };
 
   renderField = (description, created, onToggleCompleted, onDeleted) => {
+    const { timeInSeconds } = this.state;
     return (
       <div className="view">
         <input className="toggle" type="checkbox" onClick={onToggleCompleted} />
         <label>
-          <span className="description">{description}</span>
-          <span className="created">
+          <span className="title">{description}</span>
+          <span className="description">
+            <button className="icon icon-play" onClick={this.startTimer}></button>
+            <button className="icon icon-pause"></button>
+            <span>{`${this.getMinutes(timeInSeconds)}:${this.getSeconds(timeInSeconds)}`}</span>
+          </span>
+          <span className="description">
             {'Created '}
             {formatDistanceToNow(created, { includeSeconds: true, addSuffix: true })}
           </span>
