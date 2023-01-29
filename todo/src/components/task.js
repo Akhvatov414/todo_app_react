@@ -2,12 +2,66 @@ import React, { Component } from 'react';
 import formatDistanceToNow from 'date-fns/formatDistanceToNow';
 
 export default class Task extends Component {
+  constructor(props) {
+    super(props);
+
+    this.countdown = null;
+    this.updateInterval = null;
+  }
+
   state = {
     label: this.props.description,
     idTask: this.props.id,
     completed: this.props.done,
     edited: false,
     timeInSeconds: this.props.time,
+    timeFromCreated: 0,
+  };
+
+  componentDidMount() {
+    this.updateInterval = setInterval(this.updateCreatedTime, 5000);
+  }
+
+  componentDidUpdate() {
+    const { timeInSeconds } = this.state;
+    if (timeInSeconds <= 0) {
+      clearInterval(this.countdown);
+    }
+  }
+
+  componentWillUnmount() {
+    clearInterval(this.countdown);
+  }
+
+  getMinutes = (time) => {
+    //if (Math.floor(time / 60) < 10) return `0${Math.floor(time / 60)}`;
+    return Math.floor(time / 60);
+  };
+
+  getSeconds = (time) => {
+    //if (Math.floor(time % 60) < 10) return `0${Math.floor(time / 60)}`;
+    return Math.floor(time % 60);
+  };
+
+  updateCreatedTime = () => {
+    this.setState((state) => ({
+      timeFromCreated: state.timeFromCreated + 5,
+    }));
+  };
+
+  startTimer = () => {
+    if (!this.countdown && this.state.timeInSeconds > 0) {
+      this.countdown = setInterval(() => {
+        this.setState((state) => ({
+          timeInSeconds: state.timeInSeconds - 1,
+        }));
+      }, 1000);
+    }
+  };
+
+  stopTimer = () => {
+    clearInterval(this.countdown);
+    this.countdown = null;
   };
 
   spaceChecker = (e) => {
@@ -44,27 +98,6 @@ export default class Task extends Component {
     });
   };
 
-  getMinutes = (time) => {
-    if (Math.floor(time / 60) < 10) return `0${Math.floor(time / 60)}`;
-    return Math.floor(time / 60);
-  };
-
-  getSeconds = (time) => {
-    if (Math.floor(time % 60) < 10) return `0${Math.floor(time / 60)}`;
-    return Math.floor(time % 60);
-  };
-
-  startTimer = () => {
-    let countdown;
-    if (this.state.timeInSeconds > 1) {
-      countdown = setInterval(() => {
-        this.setState((state) => ({
-          timeInSeconds: state.timeInSeconds - 1,
-        }));
-      }, 1000);
-    }
-  };
-
   renderEdit = () => {
     return (
       <form onSubmit={this.editTask}>
@@ -82,13 +115,13 @@ export default class Task extends Component {
           <span className="title">{description}</span>
           <span className="description">
             <button className="icon icon-play" onClick={this.startTimer}></button>
-            <button className="icon icon-pause"></button>
+            <button className="icon icon-pause" onClick={this.stopTimer}></button>
             <span>{`${this.getMinutes(timeInSeconds)}:${this.getSeconds(timeInSeconds)}`}</span>
           </span>
-          <span className="description">
-            {'Created '}
-            {formatDistanceToNow(created, { includeSeconds: true, addSuffix: true })}
-          </span>
+          <span className="description">{`Created ${formatDistanceToNow(created, {
+            includeSeconds: true,
+            addSuffix: true,
+          })}`}</span>
         </label>
         <button className="icon icon-edit" onClick={this.onToggleEdited} />
         <button className="icon icon-destroy" onClick={onDeleted} />

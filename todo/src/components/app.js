@@ -8,7 +8,7 @@ import Footer from './footer';
 export default class App extends Component {
   state = {
     tasks: [
-      this.createTask('Completed task', 59),
+      this.createTask('Completed task', 20),
       this.createTask('Editing task', 60),
       this.createTask('Active task', 61),
     ],

@@ -35,7 +35,6 @@ export default class newTaskForm extends Component {
   onSubmit = (e) => {
     const { description, minValue, secValue } = this.state;
     e.preventDefault();
-    if (this.state.description === '') console.log('Пустой элемент');
     this.props.onAdd(description, minValue, secValue);
 
     this.resetForm();
