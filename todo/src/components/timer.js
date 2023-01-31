@@ -63,10 +63,12 @@ class Timer extends Component {
     }
     if (!this.countdown && this.state.timeInSeconds > 0) {
       this.countdown = setInterval(() => {
+        const { idTask, updateTime } = this.props;
         if (this.state.status) this.stopTimer();
         this.setState((state) => ({
           timeInSeconds: state.timeInSeconds - 1,
         }));
+        updateTime(idTask, this.state.timeInSeconds);
       }, 1000);
     }
   };

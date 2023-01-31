@@ -66,7 +66,12 @@ export default class Task extends Component {
         <input className="toggle" type="checkbox" onClick={onToggleCompleted} />
         <label>
           <span className="title">{description}</span>
-          <Timer time={timeInSeconds} completed={this.props.done} />
+          <Timer
+            idTask={this.props.id}
+            time={timeInSeconds}
+            completed={this.props.done}
+            updateTime={this.props.updateTime}
+          />
           <span className="description">{`Created ${formatDistanceToNow(created, {
             includeSeconds: true,
             addSuffix: true,

@@ -76,6 +76,18 @@ export default class App extends Component {
     });
   };
 
+  updateTime = (id, newValueTimer) => {
+    this.setState(({ tasks }) => {
+      const newTime = tasks.map((value) => {
+        if (value.id === id) {
+          value.time = newValueTimer;
+        }
+        return value;
+      });
+      return newTime;
+    });
+  };
+
   onToggleCompleted = (id) => {
     this.setState(({ tasks }) => {
       const completeTask = tasks.map((task) => {
@@ -128,6 +140,7 @@ export default class App extends Component {
           onDeleted={this.deleteTask}
           onToggleCompleted={this.onToggleCompleted}
           onEdit={this.edTask}
+          updateTime={this.updateTime}
         />
         <Footer
           buttons={this.state.filterButtons}

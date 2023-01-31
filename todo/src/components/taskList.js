@@ -4,7 +4,7 @@ import React from 'react';
 import Task from './task';
 
 function TaskList(props) {
-  const { todos, onDeleted, onToggleCompleted, onToggleEdited, onEdit } = props;
+  const { todos, onDeleted, onToggleCompleted, onToggleEdited, onEdit, updateTime } = props;
 
   const elements = todos.map((item) => {
     const { ...itemProps } = item;
@@ -15,6 +15,7 @@ function TaskList(props) {
         onToggleCompleted={() => onToggleCompleted(item.id)}
         onToggleEdited={() => onToggleEdited(item.id)}
         onEdit={onEdit}
+        updateTime={updateTime}
         key={item.id}
       />
     );
