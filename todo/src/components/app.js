@@ -103,8 +103,8 @@ export default class App extends Component {
   };
 
   render() {
-    const countDone = this.state.tasks.filter((el) => el.done).length;
-    const taskCount = this.state.tasks.length - countDone;
+    const countDone = this.state.tasks.filter((el) => !el.done).length;
+    //const taskCount = this.state.tasks.length - countDone;
 
     const todosItems = this.state.tasks.map((item) => item);
     let filteredItems;
@@ -131,7 +131,7 @@ export default class App extends Component {
         />
         <Footer
           buttons={this.state.filterButtons}
-          taskLeft={taskCount}
+          taskLeft={countDone}
           clearCompleted={this.clearCompleted}
           filterAll={this.filterAll}
           filterStatus={this.state.filter}

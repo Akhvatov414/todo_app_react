@@ -30,10 +30,15 @@
     ]
   },
   "husky": {
-    "hooks": "lint-staged"
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
   },
   "lint-staged": {
-    "*.js": "eslint --cache --debug ./src --fix",
+    "*.js": [
+      "npm run lint:write",
+      "git add"
+    ],
     "*.{js,css,md,html,json}": "prettier --write"
   },
   "browserslist": {

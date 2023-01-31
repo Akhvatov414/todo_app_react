@@ -1,12 +1,11 @@
 import React, { Component } from 'react';
 import formatDistanceToNow from 'date-fns/formatDistanceToNow';
 
+import Timer from './timer';
+
 export default class Task extends Component {
   constructor(props) {
     super(props);
-
-    this.countdown = null;
-    this.updateInterval = null;
   }
 
   state = {
@@ -16,52 +15,6 @@ export default class Task extends Component {
     edited: false,
     timeInSeconds: this.props.time,
     timeFromCreated: 0,
-  };
-
-  componentDidMount() {
-    this.updateInterval = setInterval(this.updateCreatedTime, 5000);
-  }
-
-  componentDidUpdate() {
-    const { timeInSeconds } = this.state;
-    if (timeInSeconds <= 0) {
-      clearInterval(this.countdown);
-    }
-  }
-
-  componentWillUnmount() {
-    clearInterval(this.countdown);
-  }
-
-  getMinutes = (time) => {
-    //if (Math.floor(time / 60) < 10) return `0${Math.floor(time / 60)}`;
-    return Math.floor(time / 60);
-  };
-
-  getSeconds = (time) => {
-    //if (Math.floor(time % 60) < 10) return `0${Math.floor(time / 60)}`;
-    return Math.floor(time % 60);
-  };
-
-  updateCreatedTime = () => {
-    this.setState((state) => ({
-      timeFromCreated: state.timeFromCreated + 5,
-    }));
-  };
-
-  startTimer = () => {
-    if (!this.countdown && this.state.timeInSeconds > 0) {
-      this.countdown = setInterval(() => {
-        this.setState((state) => ({
-          timeInSeconds: state.timeInSeconds - 1,
-        }));
-      }, 1000);
-    }
-  };
-
-  stopTimer = () => {
-    clearInterval(this.countdown);
-    this.countdown = null;
   };
 
   spaceChecker = (e) => {
@@ -113,11 +66,7 @@ export default class Task extends Component {
         <input className="toggle" type="checkbox" onClick={onToggleCompleted} />
         <label>
           <span className="title">{description}</span>
-          <span className="description">
-            <button className="icon icon-play" onClick={this.startTimer}></button>
-            <button className="icon icon-pause" onClick={this.stopTimer}></button>
-            <span>{`${this.getMinutes(timeInSeconds)}:${this.getSeconds(timeInSeconds)}`}</span>
-          </span>
+          <Timer time={timeInSeconds} completed={this.props.done} />
           <span className="description">{`Created ${formatDistanceToNow(created, {
             includeSeconds: true,
             addSuffix: true,
@@ -132,6 +81,7 @@ export default class Task extends Component {
   render() {
     const { id, done, description, created, onDeleted, onToggleCompleted } = this.props;
     let classNames = '';
+    //console.log(this.props);
 
     if (done) {
       classNames = 'completed';
