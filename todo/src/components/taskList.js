@@ -5,7 +5,6 @@ import Task from './task';
 
 function TaskList(props) {
   const { todos, onDeleted, onToggleCompleted, onToggleEdited, onEdit, updateTime } = props;
-  console.log(props);
   const elements = todos.map((item) => {
     const { ...itemProps } = item;
     return (
