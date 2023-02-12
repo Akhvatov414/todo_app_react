@@ -87,18 +87,12 @@ const App = () => {
     if (e.target.value === 'active') setFilter('active');
   };
   const countDone = tasks.filter((el) => !el.done).length;
-  let filteredItems;
-  switch (filter) {
-    case 'completed':
-      filteredItems = tasks.map((item) => item).filter((el) => el.done);
-      break;
-    case 'active':
-      filteredItems = tasks.map((item) => item).filter((el) => !el.done);
-      break;
-    case 'all':
-      filteredItems = tasks.map((item) => item);
-      break;
-  }
+  let filteredItems = tasks.filter((task) => {
+    if (filter === 'all') return task;
+    if (filter === 'completed') return task.done;
+    if (filter === 'active') return !task.done;
+    return task;
+  });
 
   return (
     <section className="todoapp">
