@@ -1,19 +1,19 @@
 import React, { Component } from 'react';
 
 export default class TasksFilter extends Component {
-  btns = [{ name: 'all' }, { name: 'active' }, { name: 'completed' }];
+  names = ['all', 'active', 'completed'];
 
   render() {
     const { filter, filterStatus } = this.props;
 
-    const buttons = this.btns.map(({ name }) => {
-      const isSelected = filterStatus === name;
+    const buttons = this.names.map((el) => {
+      const isSelected = filterStatus === el;
       const selectClass = isSelected ? 'selected' : '';
 
       return (
-        <li key={name}>
-          <button className={selectClass} onClick={filter} value={name}>
-            {name}
+        <li key={el}>
+          <button className={selectClass} onClick={filter} value={el}>
+            {el}
           </button>
         </li>
       );
