@@ -10,7 +10,6 @@ const Timer = ({ idTask, time, completed, updateTime }) => {
     updateInterval.current = setInterval(updateCreatedTime, 1000);
     return () => {
       clearInterval(countdown.current);
-      clearInterval(updateInterval.current);
     };
   }, []);
 
@@ -18,11 +17,11 @@ const Timer = ({ idTask, time, completed, updateTime }) => {
     if (completed) stopTimer();
     updateTime(idTask, timeInSeconds);
     if (timeInSeconds <= 0) clearInterval(countdown.current);
-  }, [timeInSeconds]);
+  }, [timeInSeconds, timeFromCreated]);
 
-  useEffect(() => {
-    return () => {};
-  }, [timeFromCreated]);
+  // useEffect(() => {
+  //   return () => {};
+  // }, [timeFromCreated]);
 
   const getMinutes = (timeValue) => {
     let minutes = Math.floor(timeValue / 60);
@@ -45,6 +44,7 @@ const Timer = ({ idTask, time, completed, updateTime }) => {
   };
 
   const startTimer = () => {
+    console.log('click Start');
     if (completed) {
       alert('Задача находится в статусе "Выполнена"');
       return;
@@ -56,6 +56,7 @@ const Timer = ({ idTask, time, completed, updateTime }) => {
     }
   };
   const stopTimer = () => {
+    console.log('click Stop');
     clearInterval(countdown.current);
     countdown.current = null;
     updateTime(idTask, timeInSeconds);

@@ -5,11 +5,7 @@ import Timer from './timer';
 
 const Task = ({ onEdit, updateTime, description, id, done, time, created, onToggleCompleted, onDeleted }) => {
   const [label, setLabel] = useState(description);
-  //const [idTask, setIdTask] = useState(id);
-  //const [completed, setCompleted] = useState(done);
   const [edited, setEdited] = useState(false);
-  //const [timeInSeconds, setTimeInSeconds] = useState(time);
-  //const [timeFromCreated, setTimeFromCreated] = useState(0);
   const editTask = (e) => {
     e.preventDefault();
     setLabel(e.target.value);
@@ -25,6 +21,7 @@ const Task = ({ onEdit, updateTime, description, id, done, time, created, onTogg
     return (
       <form onSubmit={editTask}>
         <input
+          id="edit"
           type="text"
           className="edit"
           defaultValue={label}
@@ -40,7 +37,7 @@ const Task = ({ onEdit, updateTime, description, id, done, time, created, onTogg
     return (
       <div className="view">
         <input className="toggle" type="checkbox" onClick={onToggleCompleted} />
-        <label>
+        <label htmlFor="edit">
           <span className="title">{description}</span>
           <Timer idTask={id} time={time} completed={done} updateTime={updateTime} />
           <span className="description">{`Created ${formatDistanceToNow(created, {
